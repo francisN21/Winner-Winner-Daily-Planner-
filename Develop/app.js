@@ -28,4 +28,33 @@ $("#hour15 .description").val(localStorage.getItem("hour15"));
 $("#hour16 .description").val(localStorage.getItem("hour16"));
 $("#hour17 .description").val(localStorage.getItem("hour17"));
 
-} )
+// hour tracker function to highlight red green and grey
+function hourTracker(){
+    let currentTime = moment().hour();
+
+    // function for the time-block class
+    $(".time-block").each(function(){
+        let blocktime = parseInt($(this).attr("id").split("hour")[1]);
+        console.log(currentTime, blocktime);
+        // if the current time is past the clock time then the block time will turn to grey
+        if (blocktime < currentTime) {
+            $(this).addClass("past");
+            $(this).removeClass("future");
+            $(this).removeClass("present");
+        }
+        // if the current time is within the block time, block time will turn red
+        else if (blocktime === currentTime) {
+            $(this).removeClass("past");
+            $(this).addClass("present");
+            $(this).removeClass("future");
+        }
+        // remaining block time should turn green
+        else {
+            $(this).removeClass("present");
+            $(this).removeClass("past");
+            $(this).addClass("future");
+        };
+    });
+};
+hourTracker();
+} );
